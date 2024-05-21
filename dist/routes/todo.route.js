@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const todos_controller_1 = require("../controllers/todos.controller");
+const isAuth_1 = require("../middlewares/isAuth");
+const router = express_1.default.Router();
+router.post('/create-todo', isAuth_1.isAuth, todos_controller_1.createTodo);
+router.get('/get-todos', isAuth_1.isAuth, todos_controller_1.getTodos);
+router.get('/completed-todos/', isAuth_1.isAuth, todos_controller_1.getCompletedTodos);
+router.get('/uncompleted-todos/', isAuth_1.isAuth, todos_controller_1.getUncompletedTodos);
+router.delete('/delete-todo/:id', isAuth_1.isAuth, todos_controller_1.deleteTodo);
+router.put('/update-todo/:id', isAuth_1.isAuth, todos_controller_1.updateTodo);
+router.patch('/complete-todo/:id', isAuth_1.isAuth, todos_controller_1.completedTodo);
+router.patch('/uncomplete-todo/:id', isAuth_1.isAuth, todos_controller_1.uncompletedTodo);
+router.get('/get-deleted-todos', isAuth_1.isAuth, todos_controller_1.getDeletedTodos);
+router.patch('/restore-todo/:id', isAuth_1.isAuth, todos_controller_1.restoreTodo);
+exports.default = router;
