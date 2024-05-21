@@ -17,9 +17,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const auth_model_1 = __importDefault(require("../models/auth.model"));
-function decodeUser(token) {
+function decodeUser(todo_token) {
     return __awaiter(this, void 0, void 0, function* () {
-        const decode = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        const decode = jsonwebtoken_1.default.verify(todo_token, process.env.JWT_SECRET);
         const user = auth_model_1.default.findById(decode.id);
         return user;
     });

@@ -35,7 +35,7 @@ function createUser(req, res) {
             });
             const user = yield addUser.save();
             const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET);
-            res.cookie('token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, });
+            res.cookie('todo_token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, });
             return res.status(200).json({ message: "Signup successful", token: token });
         }
         catch (error) {
@@ -58,7 +58,7 @@ function login(req, res) {
                 return res.status(401).json({ message: "Invalid credentials" });
             }
             const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET);
-            res.cookie('token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, });
+            res.cookie('todo_token', token, { httpOnly: false, secure: true, maxAge: 24 * 60 * 60 * 1000, });
             return res.status(200).json({ message: "Login successful", token: token });
         }
         catch (error) {
@@ -71,7 +71,7 @@ exports.login = login;
 function getUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const userId = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             const user = yield auth_model_1.default.findById(userId === null || userId === void 0 ? void 0 : userId._id);
             return res.status(200).json({ message: "User fetched", user });
         }
@@ -85,7 +85,7 @@ exports.getUser = getUser;
 function updateUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const userId = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             const { username, email } = req.body;
             if (!username || !email) {
                 return res.status(422).json({ message: "This feilds are Required" });
@@ -103,7 +103,7 @@ exports.updateUser = updateUser;
 function updatePassword(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const userId = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             const { oldPassword, newPassword } = req.body;
             const user = yield auth_model_1.default.findById(userId === null || userId === void 0 ? void 0 : userId._id);
             const isMatch = yield bcrypt_1.default.compare(oldPassword, user === null || user === void 0 ? void 0 : user.password);

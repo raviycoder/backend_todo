@@ -22,7 +22,7 @@ function createTodo(req, res) {
             if (!title) {
                 return res.status(400).json({ message: "Title is required" });
             }
-            const user = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const user = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             if (!user)
                 return res.status(401).json({ message: "Unauthorized" });
             const newTodo = new todos_model_1.default({
@@ -46,7 +46,7 @@ exports.createTodo = createTodo;
 function getTodos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const user = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             if (!user)
                 return res.status(401).json({ message: "Unauthorized" });
             const todos = yield todos_model_1.default.find({ userId: user === null || user === void 0 ? void 0 : user._id, deletedAt: false });
@@ -136,7 +136,7 @@ exports.uncompletedTodo = uncompletedTodo;
 function getCompletedTodos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const user = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             if (!user)
                 return res.status(401).json({ message: "Unauthorized" });
             const todos = yield todos_model_1.default.find({ userId: user === null || user === void 0 ? void 0 : user._id, completed: true, deletedAt: false });
@@ -154,7 +154,7 @@ exports.getCompletedTodos = getCompletedTodos;
 function getUncompletedTodos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const user = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             if (!user)
                 return res.status(401).json({ message: "Unauthorized" });
             const todos = yield todos_model_1.default.find({ userId: user === null || user === void 0 ? void 0 : user._id, completed: false, deletedAt: false });
@@ -172,7 +172,7 @@ exports.getUncompletedTodos = getUncompletedTodos;
 function getDeletedTodos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield (0, decode_1.decodeUser)(req.cookies.token);
+            const user = yield (0, decode_1.decodeUser)(req.cookies.todo_token);
             if (!user)
                 return res.status(401).json({ message: "Unauthorized" });
             const todos = yield todos_model_1.default.find({ userId: user === null || user === void 0 ? void 0 : user._id, deletedAt: true });

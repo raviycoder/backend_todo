@@ -12,7 +12,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.BASE_URL,
     credentials: true, // enable set cookie
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS',

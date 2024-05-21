@@ -21,7 +21,7 @@ function isAuth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Extract token from request cookies
-            const token = req.cookies.token;
+            const token = req.cookies.todo_token;
             console.log("fdfd", req.cookies);
             // If no token, return unauthorized response
             if (!token) {

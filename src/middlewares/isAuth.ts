@@ -7,7 +7,7 @@ dotenv.config();
 export async function isAuth(req: Request, res: Response, next: NextFunction) {
     try {
         // Extract token from request cookies
-        const token = req.cookies.token;
+        const token = req.cookies.todo_token;
         console.log("fdfd",req.cookies);
 
         // If no token, return unauthorized response

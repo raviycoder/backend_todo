@@ -10,7 +10,7 @@ export async function createTodo(req: Request, res: Response) {
       return res.status(400).json({ message: "Title is required" });
     }
 
-    const user = await decodeUser(req.cookies.token);
+    const user = await decodeUser(req.cookies.todo_token);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const newTodo = new Todo({
@@ -32,7 +32,7 @@ export async function createTodo(req: Request, res: Response) {
 
 export async function getTodos(req: Request, res: Response) {
   try {
-    const user = await decodeUser(req.cookies.token);
+    const user = await decodeUser(req.cookies.todo_token);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const todos = await Todo.find({ userId: user?._id, deletedAt:false });
@@ -118,7 +118,7 @@ export async function uncompletedTodo(req: Request, res: Response) {
 
 export async function getCompletedTodos(req: Request, res: Response) {
   try {
-    const user = await decodeUser(req.cookies.token);
+    const user = await decodeUser(req.cookies.todo_token);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const todos = await Todo.find({ userId: user?._id, completed: true, deletedAt:false });
@@ -133,7 +133,7 @@ export async function getCompletedTodos(req: Request, res: Response) {
 
 export async function getUncompletedTodos(req: Request, res: Response) {
   try {
-    const user = await decodeUser(req.cookies.token);
+    const user = await decodeUser(req.cookies.todo_token);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const todos = await Todo.find({ userId: user?._id, completed: false, deletedAt:false });
@@ -148,7 +148,7 @@ export async function getUncompletedTodos(req: Request, res: Response) {
 
 export async function getDeletedTodos(req: Request, res: Response) {
   try {
-    const user = await decodeUser(req.cookies.token);
+    const user = await decodeUser(req.cookies.todo_token);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const todos = await Todo.find({ userId: user?._id, deletedAt: true });
