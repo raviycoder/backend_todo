@@ -35,7 +35,10 @@ function createUser(req, res) {
             });
             const user = yield addUser.save();
             const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET);
-            res.cookie('todo_token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, });
+            res.cookie('todo_token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, 
+                secure: true,
+                sameSite: 'none',
+             });
             return res.status(200).json({ message: "Signup successful", token: token });
         }
         catch (error) {
@@ -58,7 +61,8 @@ function login(req, res) {
                 return res.status(401).json({ message: "Invalid credentials" });
             }
             const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET);
-            res.cookie('todo_token', token, { httpOnly: false, secure: true, maxAge: 24 * 60 * 60 * 1000, });
+            res.cookie('todo_token', token, { httpOnly: false, secure: true, maxAge: 24 * 60 * 60 * 1000, secure: true,
+                sameSite: 'none' });
             return res.status(200).json({ message: "Login successful", token: token });
         }
         catch (error) {

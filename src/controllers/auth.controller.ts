@@ -21,7 +21,8 @@ export async function createUser(req: Request, res: Response) {
     });
     const user = await addUser.save();
     const token = Jwt.sign({ id: user._id }, process.env.JWT_SECRET as string)
-    res.cookie('todo_token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, });
+    res.cookie('todo_token', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, secure: true,
+      sameSite: 'none', });
     return res.status(200).json({ message: "Signup successful", token:token });
   } catch (error) {
     console.log(error);
@@ -41,7 +42,8 @@ export async function login(req: Request, res: Response) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const token = Jwt.sign({ id: user._id }, process.env.JWT_SECRET as string)
-    res.cookie('todo_token', token, { httpOnly: false, secure:true, maxAge: 24 * 60 * 60 * 1000, });
+    res.cookie('todo_token', token, { httpOnly: false, secure:true, maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'none' });
     return res.status(200).json({ message: "Login successful", token:token });
   } catch (error) {
     console.log(error);
